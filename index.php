@@ -29,16 +29,26 @@ function compress_image($image_size, $background_size) {
     }
 
     $ration = ration($image_size["width"], $image_size["height"]);
-
-    if($image_size['height'] > $background_size['height']) {
-        $image_size["height"] = $background_size["height"];
-        $image_size["width"] = $image_size["height"] * $ration;
+    if ($image_size['height'] > $background_size['height'] && $image_size['width'] > $background_size['width']) {
+        if ($image_size['height'] > $image_size['width']) {
+            $image_size["width"] = $background_size["width"];
+            $image_size["height"] = $image_size["width"] * 1/$ration;
+        } else {
+            $image_size["height"] = $background_size["height"];
+            $image_size["width"] = $image_size["height"] * $ration;
+        }
+    } else {
+        if ($image_size['height'] > $background_size['height']) {
+            $image_size["height"] = $background_size["height"];
+            $image_size["width"] = $image_size["height"] * 1/$ration;
+        }
+        if ($image_size['width'] > $background_size['width']) {
+            $image_size["width"] = $background_size["width"];
+            $image_size["height"] = $image_size["width"] * $ration;
+        }
     }
 
-    if($image_size['width'] > $background_size['width']) {
-        $image_size["width"] = $background_size["width"];
-        $image_size["height"] = $image_size["width"] * $ration;
-    }
+//    $image_size['height'] = 600;
 
     return $image_size;
 }
@@ -72,10 +82,11 @@ function generate($path_to_image, $background_size = ['width' => 500, 'height' =
     echo $background;
 }
 
-$path = "assets/img/w2801n624.jpg";
-//$path = "assets/img/ag265asd.jpg";
+$path = "assets/img/w3401p607.jpg";
+//$path = "assets/img/w2801n624.jpg";
+$path = "assets/img/ag265asd.jpg";
 //$path = "assets/img/w2801n783p63.jpg";
 //$path = "assets/img/w28000.jpg";
-//$path = "assets/img/w1801n693.jpg";
+$path = "assets/img/w1801n693.jpg";
 
 generate($path);
