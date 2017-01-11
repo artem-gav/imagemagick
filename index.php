@@ -27,13 +27,8 @@ function compress_image($image_size, $background_size, $scale = 0.2) {
 
     $ration = ration($image_size["width"], $image_size["height"]);
 
-    if($image_size["width"] > $background_size["width"]) {
-        $image_size["height"] = $background_size["height"];
-        $image_size["width"] = $image_size["height"] * $ration;
-    } else {
-        $image_size["width"] = $background_size["width"];
-        $image_size["height"] = $image_size["width"] * $ration;
-    }
+    $image_size["height"] = $background_size["height"];
+    $image_size["width"] = $image_size["height"] * $ration;
 
     return $image_size;
 }
