@@ -30,8 +30,15 @@ function compress_image($image_size, $background_size) {
 
     $ration = ration($image_size["width"], $image_size["height"]);
 
-    $image_size["height"] = $background_size["height"];
-    $image_size["width"] = $image_size["height"] * $ration;
+    if($image_size['height'] > $background_size['height']) {
+        $image_size["height"] = $background_size["height"];
+        $image_size["width"] = $image_size["height"] * $ration;
+    }
+
+    if($image_size['width'] > $background_size['width']) {
+        $image_size["width"] = $background_size["width"];
+        $image_size["height"] = $image_size["width"] * $ration;
+    }
 
     return $image_size;
 }
@@ -66,5 +73,9 @@ function generate($path_to_image, $background_size = ['width' => 500, 'height' =
 }
 
 $path = "assets/img/w2801n624.jpg";
+//$path = "assets/img/ag265asd.jpg";
+//$path = "assets/img/w2801n783p63.jpg";
+//$path = "assets/img/w28000.jpg";
+//$path = "assets/img/w1801n693.jpg";
 
 generate($path);
