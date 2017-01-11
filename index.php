@@ -12,16 +12,19 @@ function ration($width, $height) {
     return $ration;
 }
 
-function compress_image($image_size, $background_size, $scale = 0.2) {
-    // Added scale for image less than background
+// Added scale for image less than background
+function scale_image($image_size, $background_size, $scale = 0.2) {
     if((1 - $image_size["width"] / $background_size["width"]) >= $scale &&
         (1 - $image_size["height"] / $background_size["height"]) >= $scale) {
         $image_size["width"] = $image_size["width"] * (1 + $scale);
         $image_size["height"] = $image_size["height"] * (1 + $scale);
-
-        return $image_size;
     }
-    elseif($image_size["width"] <= $background_size["width"] && $image_size["height"] <= $background_size["height"]) {
+
+    return $image_size;
+}
+
+function compress_image($image_size, $background_size) {
+    if($image_size["width"] <= $background_size["width"] && $image_size["height"] <= $background_size["height"]) {
         return $image_size;
     }
 
@@ -43,6 +46,7 @@ function generate($path_to_image, $background_size = ['width' => 500, 'height' =
     // Get `width` and `height`
     $image_size = $image->getImageGeometry();
 
+    $image_size = scale_image($image_size, $background_size);
     $image_size = compress_image($image_size, $background_size);
     $image->scaleImage($image_size["width"], $image_size["height"]);
 
